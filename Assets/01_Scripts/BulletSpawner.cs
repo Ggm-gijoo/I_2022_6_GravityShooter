@@ -14,7 +14,7 @@ public class BulletSpawner : MonoBehaviour
     public void Fire()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
-        bullet.transform.forward = cameraPos.forward;
+        bullet.transform.forward = cameraPos.forward + Vector3.down * 2f * Time.deltaTime;
         bullet.SendMessage("OnMove");
         Debug.DrawRay(firePos.position, cameraPos.forward, Color.cyan, 1000f);
     }

@@ -19,4 +19,26 @@ public class BulletMove : MonoBehaviour
             yield return null;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag != "Player")
+        {
+            Debug.Log($"�浹ü : {other.name}");
+            Collider[] colls = Physics.OverlapSphere(other.gameObject.transform.position, 30f);
+            foreach(var coll in colls)
+            {
+                try
+                {
+                    Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
+                    collRigid.transform.position = Vector3.Lerp(collRigid.transform.position, other.transform.position, 5f);
+                }
+                catch
+                {
+                    Debug.Log(coll.name);
+                }
+                }
+            Destroy(gameObject);
+        }
+    }
 }
