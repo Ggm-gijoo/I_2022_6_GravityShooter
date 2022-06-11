@@ -5,6 +5,8 @@ using UnityEngine;
 public class BulletMove : MonoBehaviour
 {
     private float moveSpeed = 10f;
+    private float timer = 0f;
+    private float gravityTimer = 0f;
 
     private void OnMove()
     {
@@ -13,10 +15,42 @@ public class BulletMove : MonoBehaviour
 
     private IEnumerator Move()
     {
-        while (true)
+        while (timer < 5f)
         {
+            timer += Time.deltaTime;
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             yield return null;
+        }
+        timer = 0f;
+        Destroy(gameObject);
+    }
+
+    private IEnumerator GravityMove(Rigidbody subjectRig, Collider center)
+    {
+        while (gravityTimer < 3f)
+        {
+            gravityTimer += Time.deltaTime;
+            yield return null;
+        }
+        gravityTimer = 0f;
+    }
+
+    private void BlackHoleMove(Transform origin, float radius, float force)
+    {
+        Collider[] colls = Physics.OverlapSphere(origin.position, radius);
+        foreach (var coll in colls)
+        {
+            try
+            {
+                Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
+                Vector3 draggedVec = origin.position - collRigid.position;
+                draggedVec.Normalize();
+                collRigid.velocity = draggedVec * force;
+            }
+            catch
+            {
+                Debug.Log(coll.name);
+            }
         }
     }
 
@@ -25,19 +59,7 @@ public class BulletMove : MonoBehaviour
         if (other.gameObject.tag != "Player")
         {
             Debug.Log($"�浹ü : {other.name}");
-            Collider[] colls = Physics.OverlapSphere(other.gameObject.transform.position, 30f);
-            foreach(var coll in colls)
-            {
-                try
-                {
-                    Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
-                    collRigid.transform.position = Vector3.Lerp(collRigid.transform.position, other.transform.position, 5f);
-                }
-                catch
-                {
-                    Debug.Log(coll.name);
-                }
-                }
+            BlackHoleMove(other.transform, 20f, 15f);
             Destroy(gameObject);
         }
     }

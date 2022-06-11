@@ -783,6 +783,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1636300568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3425472769637961659, guid: 20ca958416758c446961d3fee19c030c, type: 3}
+  m_PrefabInstance: {fileID: 3425632928317421233}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &1636300569
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636300568}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 0.45
+  m_Radius: 0.15
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &1650056167
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,8 +896,16 @@ PrefabInstance:
       value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3425632928968080720, guid: 20ca958416758c446961d3fee19c030c, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3425632928968080720, guid: 20ca958416758c446961d3fee19c030c, type: 3}
       propertyPath: m_Constraints
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3425632928968080723, guid: 20ca958416758c446961d3fee19c030c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20ca958416758c446961d3fee19c030c, type: 3}

@@ -10,26 +10,21 @@ public class PlayerMove : MonoBehaviour
     private float jumpPower = 5f;
 
     private Rigidbody playerRigid;
+    private CharacterController playerCtrl;
     private Animator playerAnim;
     private CameraController cameraController;
-    private GameObject target;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody>();
+        playerCtrl = GetComponent<CharacterController>();
         playerAnim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
-        target = FindObjectOfType<BulletSpawner>().gameObject;
 
         playerAnim.Play("Idle");
     }
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0))
-        {
-            target.SendMessage("Fire", 1004);
-        }
-
         Move();
         Jump();
     }
