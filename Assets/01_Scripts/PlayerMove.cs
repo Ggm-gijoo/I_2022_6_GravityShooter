@@ -11,11 +11,13 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody playerRigid;
     private Animator playerAnim;
+    private CameraController cameraController;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
+        cameraController = Camera.main.GetComponent<CameraController>();
 
         playerAnim.Play("Idle");
     }
@@ -33,6 +35,8 @@ public class PlayerMove : MonoBehaviour
 
         transform.Translate((Vector3.forward * v + Vector3.right * h) * Time.deltaTime * moveSpeed);
         transform.Rotate(Vector3.up * m * rotateSpeed * Time.deltaTime);
+
+        transform.forward = cameraController.cameraTransform.forward;
 
 
         playerAnim.SetFloat("Horizontal", h);
