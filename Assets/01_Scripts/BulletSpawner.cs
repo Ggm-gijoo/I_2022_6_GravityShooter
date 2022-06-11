@@ -9,11 +9,13 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField]
     private Transform cameraPos;
     [SerializeField]
-    private GameObject BulletPrefab;
+    private GameObject bulletPrefab;
 
     public void Fire()
     {
-        Instantiate(BulletPrefab, firePos.position, cameraPos.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
+        bullet.transform.forward = cameraPos.forward;
+        bullet.SendMessage("OnMove");
         Debug.DrawRay(firePos.position, cameraPos.forward, Color.cyan, 1000f);
     }
 }
