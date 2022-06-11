@@ -8,6 +8,9 @@ public class BulletMove : MonoBehaviour
     private float timer = 0f;
     private float gravityTimer = 0f;
 
+    [SerializeField]
+    private GameObject blackHolePrefab;
+
     private void OnMove()
     {
         StartCoroutine(Move());
@@ -56,11 +59,16 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "Player")
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "BlackHole")
         {
             Debug.Log($"�浹ü : {other.name}");
-            BlackHoleMove(other.transform, 20f, 15f);
+            GameObject blackHole = Instantiate(blackHolePrefab, other.transform.position, other.transform.rotation);
+            BlackHoleMove(blackHole.transform, 20f, 15f);
             Destroy(gameObject);
+            if(other.gameObject.tag == "Enemy")
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }
