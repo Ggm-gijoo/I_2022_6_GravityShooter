@@ -12,17 +12,24 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody playerRigid;
     private Animator playerAnim;
     private CameraController cameraController;
+    private GameObject target;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
+        target = FindObjectOfType<BulletSpawner>().gameObject;
 
         playerAnim.Play("Idle");
     }
     private void Update()
     {
+        if(Input.GetMouseButtonUp(0))
+        {
+            target.SendMessage("Fire", 1004);
+        }
+
         Move();
         Jump();
     }
