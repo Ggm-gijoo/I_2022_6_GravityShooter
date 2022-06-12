@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletMove : MonoBehaviour
 {
-    private float moveSpeed = 10f;
+    private float moveSpeed = 20f;
     private float timer = 0f;
     private float gravityTimer = 0f;
 
@@ -69,6 +69,8 @@ public class BulletMove : MonoBehaviour
             {
                 Destroy(other.gameObject);
             }
+            new WaitForSeconds(3f);
+            Destroy(blackHole.gameObject);
         }
     }
 }
