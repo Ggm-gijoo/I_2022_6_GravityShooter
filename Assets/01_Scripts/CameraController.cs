@@ -22,8 +22,10 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X");
+
         rotationX = cameraTransform.eulerAngles.y + mouseX * detailX;
         rotationX = (rotationX > 180.0f) ? rotationX - 360 : rotationX;
+
         cameraTransform.eulerAngles = new Vector3(0, rotationX, 0);
         cameraTransform.position = targetTransform.position;
     }

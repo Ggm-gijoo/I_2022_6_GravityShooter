@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private float moveSpeed = 10f;
+    private float moveSpeed = 5f;
+    private float runningSpeed = 10f;
     private float rotateSpeed = 80f;
     private float jumpPower = 5f;
 
@@ -35,7 +36,10 @@ public class PlayerMove : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         float m = Input.GetAxis("Mouse X");
 
-        transform.Translate((Vector3.forward * v + Vector3.right * h) * Time.deltaTime * moveSpeed);
+        if(Input.GetKey(KeyCode.LeftShift))
+            transform.Translate((Vector3.forward * v + Vector3.right * h) * Time.deltaTime * runningSpeed);
+        else
+            transform.Translate((Vector3.forward * v + Vector3.right * h) * Time.deltaTime * moveSpeed);
         transform.Rotate(Vector3.up * m * rotateSpeed * Time.deltaTime);
 
         transform.forward = cameraController.cameraTransform.forward;

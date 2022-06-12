@@ -6,7 +6,6 @@ public class BulletMove : MonoBehaviour
 {
     private float moveSpeed = 20f;
     private float timer = 0f;
-    private float gravityTimer = 0f;
 
     [SerializeField]
     private GameObject blackHolePrefab;
@@ -26,16 +25,6 @@ public class BulletMove : MonoBehaviour
         }
         timer = 0f;
         Destroy(gameObject);
-    }
-
-    private IEnumerator GravityMove(Rigidbody subjectRig, Collider center)
-    {
-        while (gravityTimer < 3f)
-        {
-            gravityTimer += Time.deltaTime;
-            yield return null;
-        }
-        gravityTimer = 0f;
     }
 
     private void BlackHoleMove(Transform origin, float radius, float force)
@@ -62,15 +51,13 @@ public class BulletMove : MonoBehaviour
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "BlackHole")
         {
             Debug.Log($"�浹ü : {other.name}");
-            GameObject blackHole = Instantiate(blackHolePrefab, other.transform.position, other.transform.rotation);
-            BlackHoleMove(blackHole.transform, 20f, 15f);
+            GameObject blackHole = Instantiate(blackHolePrefab, gameObject.transform.position, gameObject.transform.rotation);
+            blackHole.GetComponent<BlackHoleController>().StartInhale(blackHole.transform,12f,200f);
             Destroy(gameObject);
             if(other.gameObject.tag == "Enemy")
             {
                 Destroy(other.gameObject);
             }
-            new WaitForSeconds(3f);
-            Destroy(blackHole.gameObject);
         }
     }
 }
