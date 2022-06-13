@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BulletSpawner : MonoBehaviour
 {
@@ -40,9 +41,10 @@ public class BulletSpawner : MonoBehaviour
                 Debug.DrawRay(firePos.position, cameraPos.forward, Color.red, 1000f);
                 if(Physics.Raycast(firePos.position, cameraPos.forward, out hitInfo, 10f))
                 {
-                    StartCoroutine(MoveToHook(playerPos, hitInfo.point));
+                    playerPos.DOMove(hitInfo.point, 0.5f);
                 }
                 Debug.Log(hitInfo);
+                IsUsingHook = false;
             }
         }
     }
@@ -57,17 +59,5 @@ public class BulletSpawner : MonoBehaviour
         {
             IsHookOn = false;
         }
-    }
-
-    private IEnumerator MoveToHook(Transform playerPos,Vector3 hitPoint)
-    {
-        while (Vector3.Distance(hitPoint,playerPos.position) > 1f  && IsUsingHook)
-        {
-            Debug.Log(Vector3.Distance(hitPoint, playerPos.position));
-            Vector3 moveDir = hitPoint - playerPos.position;
-            playerPos.Translate(moveDir * 3f * Time.deltaTime);
-            yield return null;
-        }
-        IsUsingHook = false;
     }
 }
