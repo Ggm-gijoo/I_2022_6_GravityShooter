@@ -13,7 +13,8 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField]
     private GameObject bulletPrefab;
 
-    private bool isHookOn = false;
+    public bool IsHookOn { private set; get; } = false;
+    public bool IsUsingHook { private set; get; } = false;
 
     private void Update()
     {
@@ -25,20 +26,21 @@ public class BulletSpawner : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (!isHookOn)
+            if (!IsHookOn)
             {
                 GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
                 bullet.transform.forward = cameraPos.forward + Vector3.down * 2f * Time.deltaTime;
                 bullet.SendMessage("OnMove");
                 Debug.DrawRay(firePos.position, cameraPos.forward, Color.cyan, 1000f);
             }
-            else
+            else if(!IsUsingHook)
             {
+                IsUsingHook = true;
                 RaycastHit hitInfo;
                 Debug.DrawRay(firePos.position, cameraPos.forward, Color.red, 1000f);
-                if(Physics.Raycast(firePos.position, cameraPos.forward, out hitInfo, 20f))
+                if(Physics.Raycast(firePos.position, cameraPos.forward, out hitInfo, 10f))
                 {
-                    playerPos.position = hitInfo.point;
+                    StartCoroutine(MoveToHook(playerPos, hitInfo.point));
                 }
                 Debug.Log(hitInfo);
             }
@@ -49,16 +51,23 @@ public class BulletSpawner : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            isHookOn = true;
+            IsHookOn = true;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            isHookOn = false;
+            IsHookOn = false;
         }
     }
 
-    private IEnumerator MoveToHook()
+    private IEnumerator MoveToHook(Transform playerPos,Vector3 hitPoint)
     {
-        yield return null;
+        while (Vector3.Distance(hitPoint,playerPos.position) > 1f  && IsUsingHook)
+        {
+            Debug.Log(Vector3.Distance(hitPoint, playerPos.position));
+            Vector3 moveDir = hitPoint - playerPos.position;
+            playerPos.Translate(moveDir * 3f * Time.deltaTime);
+            yield return null;
+        }
+        IsUsingHook = false;
     }
 }
