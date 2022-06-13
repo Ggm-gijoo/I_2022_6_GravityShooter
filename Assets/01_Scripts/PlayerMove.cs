@@ -42,12 +42,27 @@ public class PlayerMove : MonoBehaviour
             transform.Translate((Vector3.forward * v + Vector3.right * h) * Time.deltaTime * moveSpeed);
         transform.Rotate(Vector3.up * m * rotateSpeed * Time.deltaTime);
 
-        transform.forward = cameraController.cameraTransform.forward;
+        transform.forward = cameraController.cameraTransformStaticX.forward;
 
 
         playerAnim.SetFloat("Horizontal", h);
         playerAnim.SetFloat("Vertical", v);
 
+    }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        playerAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0f);
+        playerAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0f);
+
+        playerAnim.SetIKPosition(AvatarIKGoal.LeftHand, cameraController.cameraTransform.position);
+        playerAnim.SetIKRotation(AvatarIKGoal.LeftHand, cameraController.cameraTransform.rotation);
+
+        playerAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0f);
+        playerAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0f);
+
+        playerAnim.SetIKPosition(AvatarIKGoal.RightHand, cameraController.cameraTransform.position);
+        playerAnim.SetIKRotation(AvatarIKGoal.RightHand, cameraController.cameraTransform.rotation);
     }
 
     public void Jump()

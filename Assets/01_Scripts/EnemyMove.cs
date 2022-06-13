@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    private float hp = 50f;
-    private bool isInhaled = false;
     private enum State
     {
         Idle,
@@ -18,6 +16,14 @@ public class EnemyMove : MonoBehaviour
     private bool isDie = false;
 
     private Animator enemyAnim;
+
+    private void Update()
+    {
+        if (EnemyManager.Instance().Hp <= 0 && state != State.Die)
+        {
+            state = State.Die;
+        }
+    }
 
     private void Start()
     {
@@ -61,38 +67,6 @@ public class EnemyMove : MonoBehaviour
                     break;
             }
             yield return new WaitForSeconds(0.3f);
-        }
-    }
-
-    private IEnumerator enemyInhaled()
-    {
-        while(hp > 0 && isInhaled)
-        {
-            yield return new WaitForSeconds(0.5f);
-            hp -= 10f;
-            Debug.Log(hp);
-        }
-        if(hp <= 0)
-        {
-            state = State.Die;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "BlackHole" && !isInhaled)
-        {
-            isInhaled = true;
-            StartCoroutine(enemyInhaled());
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "BlackHole" && isInhaled)
-        {
-            isInhaled = false;
-            StopCoroutine(enemyInhaled());
         }
     }
 }

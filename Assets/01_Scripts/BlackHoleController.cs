@@ -32,7 +32,23 @@ public class BlackHoleController : MonoBehaviour
                 }
             }
         }
+        Collider[] explosiveColl = Physics.OverlapSphere(origin.position, radius);
+        foreach (var coll in explosiveColl)
+        {
+            try
+            {
+                Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
+                Vector3 draggedVec = origin.position - collRigid.position;
+                draggedVec.Normalize();
+                collRigid.velocity -= draggedVec * force * 0.02f;
+            }
+            catch
+            {
+                Debug.Log(coll.name);
+            }
+        }
         timer = 0f;
+        yield return new WaitForSeconds(0.3f);
         Destroy(gameObject);
     }
 }
