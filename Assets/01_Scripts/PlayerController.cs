@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private float moveSpeed = 5f;
     private float runningSpeed = 10f;
     private float rotateSpeed = 80f;
     private float jumpPower = 5f;
+    private float hp = 100f;
+    public float Hp { get {return hp; } set {hp = value; } }
 
     private Rigidbody playerRigid;
     private CharacterController playerCtrl;

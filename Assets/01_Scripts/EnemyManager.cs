@@ -49,8 +49,8 @@ public class EnemyManager : MonoBehaviour
         if (other.gameObject.tag == "BlackHole" && IsInhaled)
         {
             Debug.Log("≈ª√‚!");
-            IsInhaled = false;
             StopCoroutine(enemyInhaled());
+            IsInhaled = false;
         }
     }
 }

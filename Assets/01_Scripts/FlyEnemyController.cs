@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyEnemyMove : MonoBehaviour
+public class FlyEnemyController : MonoBehaviour
 {
     [SerializeField]
     private float turn;
@@ -16,15 +16,13 @@ public class FlyEnemyMove : MonoBehaviour
     {
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         enemyRigid = GetComponent<Rigidbody>();
-    }
-    public void FixedUpdate()
-    {
-        MoveToPlayer();
+        StartCoroutine(MoveToPlayer());
     }
 
-    private void MoveToPlayer()
+    private IEnumerator MoveToPlayer()
     {
         transform.Translate(transform.forward * moveSpeed *Time.deltaTime);
+        yield return null;
         var targetRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
         targetRotation = targetRotation.normalized;
         enemyRigid.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, turn));

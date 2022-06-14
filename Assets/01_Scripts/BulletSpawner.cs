@@ -44,7 +44,7 @@ public class BulletSpawner : MonoBehaviour
             {
                 StartCoroutine(Reload());
             }
-            else if(!IsUsingHook)
+            else if(IsHookOn &&!IsUsingHook)
             {
                 IsUsingHook = true;
                 RaycastHit hitInfo;

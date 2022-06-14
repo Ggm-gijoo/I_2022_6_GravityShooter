@@ -19,33 +19,39 @@ public class BlackHoleController : MonoBehaviour
             Collider[] colls = Physics.OverlapSphere(origin.position, radius);
             foreach (var coll in colls)
             {
-                try
+                if (coll.tag != "Player")
                 {
-                    Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
-                    Vector3 draggedVec = origin.position - collRigid.position;
-                    draggedVec.Normalize();
-                    collRigid.velocity = draggedVec * force * Time.deltaTime;
-                }
-                catch
-                {
-                    Debug.Log(coll.name);
+                    try
+                    {
+                        Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
+                        Vector3 draggedVec = origin.position - collRigid.position;
+                        draggedVec.Normalize();
+                        collRigid.velocity = draggedVec * force * Time.deltaTime;
+                    }
+                    catch
+                    {
+                        Debug.Log(coll.name);
+                    }
                 }
             }
         }
         Collider[] explosiveColl = Physics.OverlapSphere(origin.position, radius);
         foreach (var coll in explosiveColl)
         {
-            try
+            if (coll.tag != "Player")
             {
-                Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
-                Vector3 draggedVec = origin.position - collRigid.position;
-                draggedVec.Normalize();
-                collRigid.velocity -= draggedVec * force * 0.02f;
+                try
+                {
+                    Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
+                    Vector3 draggedVec = origin.position - collRigid.position;
+                    draggedVec.Normalize();
+                    collRigid.velocity -= draggedVec * force * 0.02f;
 
-            }
-            catch
-            {
-                Debug.Log(coll.name);
+                }
+                catch
+                {
+                    Debug.Log(coll.name);
+                }
             }
         }
         timer = 0f;

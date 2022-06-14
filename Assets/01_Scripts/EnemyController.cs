@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     private enum State
     {
@@ -92,6 +92,16 @@ public class EnemyMove : MonoBehaviour
                     break;
             }
             yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player" && state == State.Attack)
+        {
+            Debug.Log("°ø°ÝÇÔ");
+            collision.gameObject.GetComponent<PlayerController>().Hp -= 10f;
+            collision.rigidbody.velocity -= Vector3.forward * 2f;
         }
     }
 }
