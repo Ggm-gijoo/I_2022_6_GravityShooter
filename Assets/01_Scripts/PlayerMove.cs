@@ -50,16 +50,10 @@ public class PlayerMove : MonoBehaviour
 
     private void OnAnimatorIK(int layerIndex)
     {
-        playerAnim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0f);
-        playerAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0f);
-
-        playerAnim.SetIKPosition(AvatarIKGoal.LeftHand, cameraController.cameraTransform.position);
+        playerAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0.4f);
         playerAnim.SetIKRotation(AvatarIKGoal.LeftHand, cameraController.cameraTransform.rotation);
 
-        playerAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0f);
-        playerAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0f);
-
-        playerAnim.SetIKPosition(AvatarIKGoal.RightHand, cameraController.cameraTransform.position);
+        playerAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0.4f);
         playerAnim.SetIKRotation(AvatarIKGoal.RightHand, cameraController.cameraTransform.rotation);
     }
 

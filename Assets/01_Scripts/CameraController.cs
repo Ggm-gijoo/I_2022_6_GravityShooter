@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
         rotationX = (rotationX > 180.0f) ? rotationX - 360 : rotationX;
 
         rotationY = rotationY + mouseY * detailY;
-        rotationY = Mathf.Clamp(rotationY, -45, 80);
+        rotationY = Mathf.Clamp(rotationY, -30, 30);
 
         cameraTransform.eulerAngles = new Vector3(-rotationY, rotationX, 0);
         cameraTransform.position = targetTransform.position;

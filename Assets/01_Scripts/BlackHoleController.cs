@@ -41,6 +41,7 @@ public class BlackHoleController : MonoBehaviour
                 Vector3 draggedVec = origin.position - collRigid.position;
                 draggedVec.Normalize();
                 collRigid.velocity -= draggedVec * force * 0.02f;
+
             }
             catch
             {

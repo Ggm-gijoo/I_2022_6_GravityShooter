@@ -28,7 +28,7 @@ public class EnemyManager : MonoBehaviour
     {
         while (Hp > 0 && IsInhaled)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             Hp -= 10f;
             Debug.Log(Hp);
         }
