@@ -23,15 +23,6 @@ public class BulletSpawner : MonoBehaviour
     public bool IsUsingHook { private set; get; } = false;
     public bool IsReload { private set; get; } = false;
 
-    private void Start()
-    {
-        hookLine = hook.GetComponent<LineRenderer>();
-        hookLine.SetPosition(0, Vector3.zero);
-        hookLine.SetPosition(1, Vector3.zero);
-        hookLine.startWidth = 0.05f;
-        hookLine.endWidth = 0.05f;
-    }
-
     private void Update()
     {
         Fire();
@@ -61,10 +52,16 @@ public class BulletSpawner : MonoBehaviour
                 {
                     GameObject hookClone = Instantiate(hook,hitInfo.point,firePos.rotation);
 
+                    hookLine = hookClone.GetComponent<LineRenderer>();
+
+                    hookLine.startWidth = 0.05f;
+                    hookLine.endWidth = 0.05f;
+
                     hookLine.SetPosition(0, firePos.position);
                     hookLine.SetPosition(1, hookClone.transform.position);
 
-                    playerPos.DOMove(hitInfo.point, 1f);
+                    playerPos.DOMove(hitInfo.point, 0.5f);
+                    StartCoroutine(DestroyHook(hookClone));
                 }
                 Debug.Log(hitInfo);
                 IsUsingHook = false;
@@ -85,6 +82,14 @@ public class BulletSpawner : MonoBehaviour
         ammunition = 3f;
         Debug.Log($"ÀçÀåÀü ¿Ï·á! ÃÑ¾Ë °¹¼ö {ammunition}");
         IsReload = false;
+    }
+
+    public IEnumerator DestroyHook(GameObject hook)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(hook);
+        hookLine.SetPosition(0, Vector3.zero);
+        hookLine.SetPosition(1, Vector3.zero);
     }
 
     public void HookShot()

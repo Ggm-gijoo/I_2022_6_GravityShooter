@@ -5,16 +5,16 @@ using UnityEngine;
 public class FlyEnemyMove : MonoBehaviour
 {
     [SerializeField]
-    private Transform playerTransform;
-    [SerializeField]
     private float turn;
 
     private float moveSpeed = 5f;
 
+    private Transform playerTransform;
     private Rigidbody enemyRigid;
 
     private void Start()
     {
+        playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         enemyRigid = GetComponent<Rigidbody>();
     }
     public void FixedUpdate()
