@@ -251,8 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c88bc2891d08d4398b79e0a960e610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
-  turn: 2
+  turn: 10
 --- !u!114 &7618326842824270781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,4 +265,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInhaled: 0
+  IsStopped: 0
   Hp: 40

@@ -21,7 +21,7 @@ public class FlyEnemyController : MonoBehaviour
 
     private IEnumerator MoveToPlayer()
     {
-        while (gameObject.GetComponent<EnemyManager>().Hp > 0 && !gameObject.GetComponent<EnemyManager>().IsInhaled)
+        while (gameObject.GetComponent<EnemyManager>().Hp > 0 && !gameObject.GetComponent<EnemyManager>().IsStopped)
         {
             float distance = Vector3.Distance(transform.position, playerTransform.position);
             yield return null;

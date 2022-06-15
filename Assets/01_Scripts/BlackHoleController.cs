@@ -21,6 +21,10 @@ public class BlackHoleController : MonoBehaviour
             {
                 if (coll.tag != "Player")
                 {
+                    if(coll.tag == "Enemy")
+                    {
+                        coll.gameObject.GetComponent<EnemyManager>().IsStopped = true;
+                    }
                     try
                     {
                         Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
@@ -40,6 +44,10 @@ public class BlackHoleController : MonoBehaviour
         {
             if (coll.tag != "Player")
             {
+                if (coll.tag == "Enemy")
+                {
+                    coll.gameObject.GetComponent<EnemyManager>().IsStopped = false;
+                }
                 try
                 {
                     Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class EnemyController : MonoBehaviour
     }
     private Transform playerTransform;
     private EnemyManager enemyManager;
+    private NavMeshAgent agent;
     private float walkDist = 15f;
     private float attackDist = 7f;
 
@@ -25,8 +27,13 @@ public class EnemyController : MonoBehaviour
     {
         enemyAnim = GetComponent<Animator>();
         enemyManager = GetComponent<EnemyManager>();
+        agent = GetComponent<NavMeshAgent>();
+
+        agent.updateRotation = false;
         enemyAnim.SetBool("Open_Anim", true);
+
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+
         StartCoroutine(CheckMonsterState());
         StartCoroutine(EnemyAction());
     }
@@ -36,6 +43,12 @@ public class EnemyController : MonoBehaviour
         if (enemyManager.Hp <= 0 && state != State.Die)
         {
             state = State.Die;
+        }
+        if (agent.remainingDistance >= 7f)
+        {
+            Vector3 direction = agent.desiredVelocity;
+            Quaternion rot = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 10f);
         }
     }
 
@@ -70,21 +83,28 @@ public class EnemyController : MonoBehaviour
             switch (state)
             {
                 case State.Idle:
+                    agent.isStopped = true;
                     enemyAnim.SetBool("Roll", false);
                     enemyAnim.SetBool("Walk", false);
                     enemyAnim.SetBool("Open", true);
                     break;
                 case State.Walk:
+                    agent.SetDestination(playerTransform.position);
                     enemyAnim.SetBool("Walk", true);
                     enemyAnim.SetBool("Roll", false);
+                    agent.isStopped = false;
+                    agent.speed = 3.5f;
                     break;
                 case State.Attack:
+                    agent.SetDestination(playerTransform.position);
                     enemyAnim.SetBool("Walk", false);
                     enemyAnim.SetBool("Roll", true);
+                    agent.speed = 10f;
                     break;
 
                 case State.Die:
                     Debug.Log("Im Die");
+                    agent.isStopped = true;
                     isDie = true;
                     enemyAnim.SetBool("Open", false);
                     enemyAnim.SetBool("Roll", false);
@@ -100,7 +120,8 @@ public class EnemyController : MonoBehaviour
         if(collision.gameObject.tag == "Player" && state == State.Attack)
         {
             collision.gameObject.GetComponent<PlayerController>().Hp -= 10f;
-            collision.rigidbody.velocity -= Vector3.forward * 2f;
+            collision.rigidbody.AddForce(collision.transform.forward * -5f,ForceMode.Impulse);
+            Debug.Log(collision.gameObject.GetComponent<PlayerController>().Hp);
         }
     }
 }

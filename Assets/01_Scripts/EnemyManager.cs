@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public bool IsInhaled = false;
+    public bool IsStopped = false;
     public float Hp = 50f;
 
     private static EnemyManager instance;
