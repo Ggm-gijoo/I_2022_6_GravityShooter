@@ -52,7 +52,7 @@ public class BulletController : MonoBehaviour
         {
             Debug.Log($"�浹ü : {other.name}");
             GameObject blackHole = Instantiate(blackHolePrefab, gameObject.transform.position, gameObject.transform.rotation);
-            blackHole.GetComponent<BlackHoleController>().StartInhale(blackHole.transform,5f,750f);
+            blackHole.GetComponent<BlackHoleController>().StartInhale(blackHole.transform,7f,750f);
             Destroy(gameObject);
             if(other.gameObject.tag == "Enemy")
             {

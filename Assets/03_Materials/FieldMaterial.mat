@@ -240,6 +240,6 @@ Material:
     - _HighColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _Outline_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _RimLightColor: {r: 0.059490018, g: 0.04111783, b: 0.2830189, a: 1}
+    - _RimLightColor: {r: 0.03766464, g: 0.18231185, b: 0.21698111, a: 1}
     - _ViewShift: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

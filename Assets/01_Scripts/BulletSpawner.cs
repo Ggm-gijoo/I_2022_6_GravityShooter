@@ -36,7 +36,7 @@ public class BulletSpawner : MonoBehaviour
             if (!IsHookOn && ammunition > 0)
             {
                 GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
-                bullet.transform.forward = cameraPos.forward + Vector3.down * 2f * Time.deltaTime;
+                bullet.transform.forward = cameraPos.forward;
                 bullet.SendMessage("OnMove");
                 ammunition--;
             }
