@@ -28,8 +28,11 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        Move();
-        Jump();
+        if (Time.timeScale != 0)
+        {
+            Move();
+            Jump();
+        }
     }
 
     public void Move()

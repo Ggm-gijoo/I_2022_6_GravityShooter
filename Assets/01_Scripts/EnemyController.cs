@@ -99,7 +99,6 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" && state == State.Attack)
         {
-            Debug.Log("°ø°ÝÇÔ");
             collision.gameObject.GetComponent<PlayerController>().Hp -= 10f;
             collision.rigidbody.velocity -= Vector3.forward * 2f;
         }

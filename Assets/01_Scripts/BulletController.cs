@@ -50,7 +50,6 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "BlackHole")
         {
-            Debug.Log($"�浹ü : {other.name}");
             GameObject blackHole = Instantiate(blackHolePrefab, gameObject.transform.position, gameObject.transform.rotation);
             blackHole.GetComponent<BlackHoleController>().StartInhale(blackHole.transform,7f,750f);
             Destroy(gameObject);

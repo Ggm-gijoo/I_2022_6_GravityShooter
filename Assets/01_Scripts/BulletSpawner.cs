@@ -25,8 +25,11 @@ public class BulletSpawner : MonoBehaviour
 
     private void Update()
     {
-        Fire();
-        HookShot();
+        if (Time.timeScale != 0)
+        {
+            Fire();
+            HookShot();
+        }
     }
 
     public void Fire()

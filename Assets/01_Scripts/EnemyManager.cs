@@ -30,7 +30,6 @@ public class EnemyManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.7f);
             Hp -= 10f;
-            Debug.Log(Hp);
         }
     }
 
@@ -38,7 +37,6 @@ public class EnemyManager : MonoBehaviour
     {
         if (other.gameObject.tag == "BlackHole" && !IsInhaled)
         {
-            Debug.Log("¿∏æ«");
             IsInhaled = true;
             StartCoroutine(enemyInhaled());
         }
@@ -48,7 +46,6 @@ public class EnemyManager : MonoBehaviour
     {
         if (other.gameObject.tag == "BlackHole" && IsInhaled)
         {
-            Debug.Log("≈ª√‚!");
             StopCoroutine(enemyInhaled());
             IsInhaled = false;
         }

@@ -50,7 +50,7 @@ public class BlackHoleController : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.Log(coll.name);
+
                 }
             }
         }

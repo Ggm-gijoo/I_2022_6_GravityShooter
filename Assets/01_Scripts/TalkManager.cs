@@ -14,7 +14,10 @@ public class TalkManager : MonoBehaviour
 
     public void GenData()
     {
-        talkData.Add(100, new string[] { "<b><color=#ff6600>돈키호테</color>\n</b><color=#ffff00>관리자</color> 나리는 꿈이 있는가?", "난 있다네!" });
+        talkData.Add(0, new string[] { "<b><size=75%> 여기는 팀 레인보우식스시즈.\n달 점령 작전을 시행합니다. </size></b>", "<b> . . . </b>", "<b><size=75%> 전방에 인증 코드 식별 불가능한 <color=#882200>로봇</color> 다수 확인됨. </size></b>", "<b><size=75%> 수월한 작전 진행을 위해 파괴를 시도합니다.</size></b>" });
+        talkData.Add(100, new string[] { "<b><color=#ff6600>NPC1</color>\n</b><size=75%>있는가?</size>", "<b><color=#ff6600>NPC1</color>\n</b>난 있다네!" });
+        talkData.Add(200, new string[] { "<b><color=#d3de8b>NPC2</color>\n</b><size=75%>안녕</size>", "<b><color=#d3de8b>NPC2</color>\n</b>행성을 망치는 로봇을 잡아줘!", "<b><color=#d3de8b>NPC2</color>\n</b>응 구라야~" });
+
     }
 
     public string GetTalk(int id, int talkIndex)
