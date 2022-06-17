@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
         {
             state = State.Die;
         }
-        if (agent.remainingDistance >= 7f)
+        if (state != State.Die && state != State.Idle)
         {
             Vector3 direction = agent.desiredVelocity;
             Quaternion rot = Quaternion.LookRotation(direction);
@@ -63,16 +63,21 @@ public class EnemyController : MonoBehaviour
 
             float distance = Vector3.Distance(transform.position, playerTransform.position);
 
-            if (distance <= attackDist)
+            if (!gameObject.GetComponent<EnemyManager>().IsStopped)
             {
-                state = State.Attack;
-            }
-            else if (distance <= walkDist)
-            {
-                state = State.Walk;
+                if (distance <= attackDist)
+                {
+                    state = State.Attack;
+                }
+                else if (distance <= walkDist)
+                {
+                    state = State.Walk;
+                }
+                else
+                    state = State.Idle;
             }
             else
-            state = State.Idle;
+                state = State.Idle;
         }
     }
 
@@ -93,13 +98,13 @@ public class EnemyController : MonoBehaviour
                     enemyAnim.SetBool("Walk", true);
                     enemyAnim.SetBool("Roll", false);
                     agent.isStopped = false;
-                    agent.speed = 3.5f;
+                    agent.speed = 5f;
                     break;
                 case State.Attack:
                     agent.SetDestination(playerTransform.position);
                     enemyAnim.SetBool("Walk", false);
                     enemyAnim.SetBool("Roll", true);
-                    agent.speed = 10f;
+                    agent.speed = 20f;
                     break;
 
                 case State.Die:
@@ -120,7 +125,7 @@ public class EnemyController : MonoBehaviour
         if(collision.gameObject.tag == "Player" && state == State.Attack)
         {
             collision.gameObject.GetComponent<PlayerController>().Hp -= 10f;
-            collision.rigidbody.AddForce(collision.transform.forward * -5f,ForceMode.Impulse);
+            collision.rigidbody.AddForce(collision.transform.forward * -10f,ForceMode.Impulse);
             Debug.Log(collision.gameObject.GetComponent<PlayerController>().Hp);
         }
     }

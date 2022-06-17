@@ -53,7 +53,7 @@ public class BlackHoleController : MonoBehaviour
                     Rigidbody collRigid = coll.gameObject.GetComponent<Rigidbody>();
                     Vector3 draggedVec = origin.position - collRigid.position;
                     draggedVec.Normalize();
-                    collRigid.velocity -= draggedVec * force * 0.02f;
+                    collRigid.AddForce(-draggedVec * force * 0.02f,ForceMode.Impulse);
 
                 }
                 catch

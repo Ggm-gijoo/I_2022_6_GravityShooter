@@ -10,6 +10,14 @@ public class EnemyManager : MonoBehaviour
 
     private static EnemyManager instance;
 
+    private void Update()
+    {
+        if(Hp <= 0)
+        {
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+    }
+
     public static EnemyManager Instance()
     {
         if (instance == null)

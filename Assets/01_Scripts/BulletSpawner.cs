@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class BulletSpawner : MonoBehaviour
@@ -15,13 +16,22 @@ public class BulletSpawner : MonoBehaviour
     private GameObject bulletPrefab;
     [SerializeField]
     private GameObject hook;
+    [SerializeField]
+    private GameObject reloadTextObj;
 
+    private Text reloadText;
     private LineRenderer hookLine;
     private float ammunition = 3f;
 
     public bool IsHookOn { private set; get; } = false;
     public bool IsUsingHook { private set; get; } = false;
     public bool IsReload { private set; get; } = false;
+
+    private void Awake()
+    {
+        reloadTextObj.SetActive(false);
+        reloadText = reloadTextObj.GetComponent<Text>();
+    }
 
     private void Update()
     {
@@ -79,12 +89,20 @@ public class BulletSpawner : MonoBehaviour
 
     public IEnumerator Reload()
     {
-        Debug.Log($"재장전중 . . . 총알 갯수 {ammunition}");
+        reloadTextObj.SetActive(true);
         IsReload = true;
-        yield return new WaitForSeconds(3f - ammunition);
-        ammunition = 3f;
-        Debug.Log($"재장전 완료! 총알 갯수 {ammunition}");
+        for(int i = 0; i < 3f - ammunition; i++)
+        {
+            reloadText.text += " .";
+            yield return new WaitForSeconds(1f);
+            ammunition += 1f;
+        }
+        yield return new WaitForSeconds(0.1f);
+        reloadText.text = "재장전 완료!";
+        yield return new WaitForSeconds(0.5f);
+        reloadText.text = "재장전중";
         IsReload = false;
+        reloadTextObj.SetActive(false);
     }
 
     public IEnumerator DestroyHook(GameObject hook)
@@ -97,13 +115,7 @@ public class BulletSpawner : MonoBehaviour
 
     public void HookShot()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            IsHookOn = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            IsHookOn = false;
-        }
+        if (Input.GetKey(KeyCode.LeftShift)) IsHookOn = true;
+        else IsHookOn = false;
     }
 }
