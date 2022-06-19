@@ -20,7 +20,7 @@ public class BulletController : MonoBehaviour
         while (timer < 5f)
         {
             timer += Time.deltaTime;
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime + Vector3.up * 0.5f * Time.deltaTime);
             yield return null;
         }
         timer = 0f;

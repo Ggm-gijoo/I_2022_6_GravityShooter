@@ -124,9 +124,8 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" && state == State.Attack)
         {
-            collision.gameObject.GetComponent<PlayerController>().Hp -= 10f;
+            collision.gameObject.GetComponent<PlayerController>().CurrHp -= 10f;
             collision.rigidbody.AddForce(collision.transform.forward * -10f,ForceMode.Impulse);
-            Debug.Log(collision.gameObject.GetComponent<PlayerController>().Hp);
         }
     }
 }

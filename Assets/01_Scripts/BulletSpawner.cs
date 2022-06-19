@@ -18,6 +18,8 @@ public class BulletSpawner : MonoBehaviour
     private GameObject hook;
     [SerializeField]
     private GameObject reloadTextObj;
+    [SerializeField]
+    private GameObject[] bulletIcons;
 
     private Text reloadText;
     private LineRenderer hookLine;

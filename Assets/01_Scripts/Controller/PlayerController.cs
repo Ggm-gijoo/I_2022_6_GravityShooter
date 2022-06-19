@@ -9,8 +9,9 @@ public class PlayerController : MonoBehaviour
     private float runningSpeed = 10f;
     private float rotateSpeed = 80f;
     private float jumpPower = 5f;
-    private float hp = 100f;
-    public float Hp { get {return hp; } set {hp = value; } }
+    private float initHp = 100f;
+    public float InitHp { get {return initHp; } set {initHp = value; } }
+    public float CurrHp;
 
     private Rigidbody playerRigid;
     private CharacterController playerCtrl;
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
         playerCtrl = GetComponent<CharacterController>();
         playerAnim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
+
+        CurrHp = initHp;
 
         playerAnim.Play("Idle");
     }
