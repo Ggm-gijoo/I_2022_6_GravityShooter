@@ -21,5 +21,22 @@ public class UIManager : MonoBehaviour
     {
         hpBarImage.fillAmount = playerController.CurrHp / playerController.InitHp;
         hpText.text = $"HP {playerController.CurrHp} / {playerController.InitHp}";
+
+        if (playerController.CurrHp <= playerController.InitHp * 0.2)
+        {
+            hpBarImage.color = Color.red;
+        }
+        else if (playerController.CurrHp <= playerController.InitHp * 0.5)
+        {
+            hpBarImage.color = Color.yellow;
+        }
+        else if (playerController.CurrHp < playerController.InitHp)
+        {
+            hpBarImage.color = Color.green;
+        }
+        else
+        {
+            hpBarImage.color = Color.cyan;
+        }
     }
 }

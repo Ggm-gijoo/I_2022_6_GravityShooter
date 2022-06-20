@@ -23,7 +23,8 @@ public class BulletSpawner : MonoBehaviour
 
     private Text reloadText;
     private LineRenderer hookLine;
-    private float ammunition = 3f;
+    private int ammunition = 3;
+    private int reloadAmm = 3;
 
     public bool IsHookOn { private set; get; } = false;
     public bool IsUsingHook { private set; get; } = false;
@@ -53,7 +54,9 @@ public class BulletSpawner : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
                 bullet.transform.forward = cameraPos.forward;
                 bullet.SendMessage("OnMove");
+                bulletIcons[ammunition - 1].GetComponent<Image>().color = Color.black;
                 ammunition--;
+                reloadAmm--;
             }
             else if (!IsHookOn && ammunition <= 0 && !IsReload)
             {
@@ -93,14 +96,16 @@ public class BulletSpawner : MonoBehaviour
     {
         reloadTextObj.SetActive(true);
         IsReload = true;
-        for(int i = 0; i < 3f - ammunition; i++)
+        for(int i = 0; i < 3 - reloadAmm; i++)
         {
-            reloadText.text += " .";
             yield return new WaitForSeconds(1f);
-            ammunition += 1f;
+            reloadText.text += " .";
+            ammunition += 1;
+            bulletIcons[ammunition-1].GetComponent<Image>().color = Color.cyan;
         }
+        reloadAmm = 3;
         yield return new WaitForSeconds(0.1f);
-        reloadText.text = "재장전 완료!";
+        reloadText.text = $"재장전 완료!";
         yield return new WaitForSeconds(0.5f);
         reloadText.text = "재장전중";
         IsReload = false;

@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
                 yield break;
             }
             textWriter += talkData[i];
+
             textTalk.text = textWriter;
             i++;
             yield return new WaitForSecondsRealtime(0.02f);
