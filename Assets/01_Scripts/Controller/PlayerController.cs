@@ -6,22 +6,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float moveSpeed = 5f;
-    private float runningSpeed = 10f;
     private float rotateSpeed = 80f;
-    private float jumpPower = 5f;
+    private float jumpPower = 7f;
     private float initHp = 100f;
     public float InitHp { get {return initHp; } set {initHp = value; } }
     public float CurrHp;
 
     private Rigidbody playerRigid;
-    private CharacterController playerCtrl;
     private Animator playerAnim;
     private CameraController cameraController;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody>();
-        playerCtrl = GetComponent<CharacterController>();
         playerAnim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
 

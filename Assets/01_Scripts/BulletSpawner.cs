@@ -49,7 +49,7 @@ public class BulletSpawner : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (!IsHookOn && ammunition > 0)
+            if (!IsHookOn && ammunition > 0 && !IsReload)
             {
                 GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
                 bullet.transform.forward = cameraPos.forward;
@@ -106,9 +106,9 @@ public class BulletSpawner : MonoBehaviour
         reloadAmm = 3;
         yield return new WaitForSeconds(0.1f);
         reloadText.text = $"재장전 완료!";
+        IsReload = false;
         yield return new WaitForSeconds(0.5f);
         reloadText.text = "재장전중";
-        IsReload = false;
         reloadTextObj.SetActive(false);
     }
 
