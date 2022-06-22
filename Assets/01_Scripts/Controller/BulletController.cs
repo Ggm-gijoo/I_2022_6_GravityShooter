@@ -20,7 +20,7 @@ public class BulletController : MonoBehaviour
         while (timer < 5f)
         {
             timer += Time.deltaTime;
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime + Vector3.up * 0.5f * Time.deltaTime);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime + Vector3.up * 1.2f * Time.deltaTime);
             yield return null;
         }
         timer = 0f;
@@ -53,10 +53,6 @@ public class BulletController : MonoBehaviour
             GameObject blackHole = Instantiate(blackHolePrefab, gameObject.transform.position, gameObject.transform.rotation);
             blackHole.GetComponent<BlackHoleController>().StartInhale(blackHole.transform,7f,1000f);
             Destroy(gameObject);
-            if(other.gameObject.tag == "Enemy")
-            {
-                Destroy(other.gameObject);
-            }
         }
     }
 }

@@ -11,8 +11,6 @@ public struct Sheet
 public class TalkManager : MonoBehaviour
 {
     Dictionary<int,string[]> talkData;
-    GameObject abc;
-    string[] adad = { "<size=75%> 안녕 </size>" };
 
     private void Awake()
     {
@@ -22,11 +20,12 @@ public class TalkManager : MonoBehaviour
 
     public void GenData()
     {
-        talkData.Add(0, new string[] { "서기 5억2천만년","<size=75%>" +  "현 시각 태양력 17:09,\n행성 개발 시퀀스를 시작합니다." + "</size>", " . . . ", "<size=75%>" + "전방에 인증 코드 식별 불가능한 <color=aqua>로봇</color>이 다수 확인됨." + "</size>", "<size=75%> 수월한 작전 진행을 위해 파괴를 시도합니다.</size>" });
-        talkData.Add(100, new string[] { "<size=75%>이것은 대단한 것이 나올 것이 분명한 보물상자일 것이다.</size>", " . . . ", "<size=150%> 이럴수가!!!!! </size>", " 그다지 쓸만한 것은 없었다." });
-        talkData.Add(200, new string[] { "<color=#d3de8b>NPC2</color>\n<size=75%>안녕</size>", "<color=#d3de8b>NPC2</color>\n꿈이 있는가?", "<color=#d3de8b>NPC2</color>\n난 있다네!" });
-        talkData.Add(1000, new string[] { "이것은 과거 거주장소 역할을 했을 것으로 추정된다.", "과거 지적 생명체가 존재했음을 확인할 수 있다.", "내부에 로봇이 드글드글한 것으로 인식된다." });
-        talkData.Add(1001, adad);
+        talkData.Add(0, new string[] { "서기 5억2천만년"," 현 시각 태양력 17:09,\n지금부터 생존자 구출을 시작합니다.", " . . . ", " 전방에 인증 코드 식별 불가능한 로봇이 다수 확인됨.", " 수월한 작전 진행을 위해 파괴를 시도합니다." });
+        talkData.Add(100, new string[] { " 구해주셔서 감사합니다!", " . . . ", " 그... 어디로 가면 될까요?"});
+        talkData.Add(101, new string[] { " 앗! 지원 병력이군요!", " 드디어 살아나갈 수 있다니, 감동적이네요!", "그럼 알려주신 위치로 가볼게요!" });
+        talkData.Add(102, new string[] { " 으악! 저리 가, 이 깡통들아!", " . . .", " 아... 지원 병력이었구나... 구출해주셔서 감사합니다!" });
+        talkData.Add(103, new string[] { " 윽.. 다리에 부상을 입은 것 같아요.", " 여기서 지원 병력을 만나다니, 하늘이 저를 도왔네요.", " 그럼 말씀해주신 위치로 가볼게요. 감사합니다." });
+        talkData.Add(1000, new string[] { "이 장소는 과거 거주장소 역할을 했을 것으로 추정된다.", "먼 옛날, 해당 위치에 지적 생명체가 존재했음을 확인할 수 있다.", "겉으로는 위험성이 드러나지 않으나, 내부에는 로봇이 드글드글한 것 같다." });
     }
 
     public string GetTalk(int id, int talkIndex)

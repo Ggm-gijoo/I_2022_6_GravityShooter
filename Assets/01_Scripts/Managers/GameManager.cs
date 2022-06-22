@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int talkIndex;
+    public int resqueCount = 0;
+
     public TalkManager talkManager;
     public Transform playerTransform;
+
     public GameObject talkPanel;
+    public GameObject resquePanel;
     public GameObject FPanel;
+
     public GameObject Aim;
+
     public Text textTalk;
+
     private Text fText;
+    private Text resqueText;
     private string textWriter;
 
     public bool IsTalk { private set; get; } = false;
@@ -24,10 +33,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         fText = FPanel.GetComponentInChildren<Text>();
+        resqueText = resquePanel.GetComponentInChildren<Text>();
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
+        resquePanel.SetActive(false);
         FPanel.SetActive(false);
         talkPanel.SetActive(true);
         Talk(0);
@@ -36,6 +47,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         Check();
+        ResqueCheck();
     }
     public void Check()
     {
@@ -48,6 +60,7 @@ public class GameManager : MonoBehaviour
                 Talk(0);
             }
             talkPanel.SetActive(IsTalk);
+            resquePanel.SetActive(!IsTalk);
         }
         else
         {
@@ -57,6 +70,7 @@ public class GameManager : MonoBehaviour
                 if (hitInfo.transform.GetComponent<TalkData>() != null)
                 {
                     FPanel.SetActive(!IsTalk);
+                    resquePanel.SetActive(!IsTalk);
                     TalkData hitTalkData = hitInfo.transform.GetComponent<TalkData>();
                     if(hitTalkData.id < 100)
                     {
@@ -64,7 +78,7 @@ public class GameManager : MonoBehaviour
                     }
                     else if(hitTalkData.id < 1000)
                     {
-                        fText.text = "    대화하기";
+                        fText.text = "    구조하기";
                     }
                     else if(hitTalkData.id < 10000)
                     {
@@ -92,6 +106,11 @@ public class GameManager : MonoBehaviour
 
             TalkData talkData = scanObject.GetComponent<TalkData>();
             Talk(talkData.id);
+            if(!IsTalk && talkData.id < 1000 && talkData.id >= 100)
+            {
+                resqueCount++;
+                Destroy(scanObj);
+            }
         }
         catch
         {
@@ -113,6 +132,7 @@ public class GameManager : MonoBehaviour
             talkIndex = 0;
             Time.timeScale = 1f;
             Aim.SetActive(true);
+            resquePanel.SetActive(true);
             return;
         }
         IsTalk = true;
@@ -141,5 +161,14 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.02f);
         }
         IsTyping = false;
+    }
+
+    public void ResqueCheck()
+    {
+        resqueText.text = $"구조인원 {resqueCount} / 10";
+        if (resqueCount >= 10)
+        {
+            SceneManager.LoadScene("Clear");
+        }
     }
 }

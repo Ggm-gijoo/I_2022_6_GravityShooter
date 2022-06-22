@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
         Attack,
         Die
     }
+    private BgmManager bgmManager;
     private Transform playerTransform;
     private EnemyManager enemyManager;
     private NavMeshAgent agent;
@@ -32,6 +33,7 @@ public class EnemyController : MonoBehaviour
         agent.updateRotation = false;
         enemyAnim.SetBool("Open_Anim", true);
 
+        bgmManager = GameObject.FindWithTag("BgmManager").GetComponent<BgmManager>();
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
 
         StartCoroutine(CheckMonsterState());
@@ -67,14 +69,19 @@ public class EnemyController : MonoBehaviour
             {
                 if (distance <= attackDist)
                 {
+                    bgmManager.state = BgmManager.State.Warning;
                     state = State.Attack;
                 }
                 else if (distance <= walkDist)
                 {
+                    bgmManager.state = BgmManager.State.Warning;
                     state = State.Walk;
                 }
                 else
+                {
+                    bgmManager.state = BgmManager.State.Basic;
                     state = State.Idle;
+                }
             }
             else
                 state = State.Idle;
@@ -94,6 +101,10 @@ public class EnemyController : MonoBehaviour
                     enemyAnim.SetBool("Open", true);
                     break;
                 case State.Walk:
+                    while (enemyAnim.GetCurrentAnimatorStateInfo(0).IsName("anim_open_Idle_F1") || enemyAnim.GetCurrentAnimatorStateInfo(0).IsName("anim_open"))
+                    {
+                        yield return new WaitForEndOfFrame();
+                    }
                     agent.SetDestination(playerTransform.position);
                     enemyAnim.SetBool("Walk", true);
                     enemyAnim.SetBool("Roll", false);
@@ -101,19 +112,27 @@ public class EnemyController : MonoBehaviour
                     agent.speed = 5f;
                     break;
                 case State.Attack:
+                    while (enemyAnim.GetCurrentAnimatorStateInfo(0).IsName("anim_open_Idle_F1") || enemyAnim.GetCurrentAnimatorStateInfo(0).IsName("anim_open"))
+                    {
+                        yield return new WaitForEndOfFrame();
+                    }
                     agent.SetDestination(playerTransform.position);
                     enemyAnim.SetBool("Walk", false);
                     enemyAnim.SetBool("Roll", true);
+                    agent.isStopped = false;
                     agent.speed = 20f;
                     break;
 
                 case State.Die:
+                    bgmManager.state = BgmManager.State.Basic;
                     Debug.Log("Im Die");
                     agent.isStopped = true;
                     isDie = true;
                     enemyAnim.SetBool("Open", false);
                     enemyAnim.SetBool("Roll", false);
                     enemyAnim.SetBool("Walk", false);
+                    yield return new WaitForSeconds(1f);
+                    Destroy(gameObject);
                     break;
             }
             yield return new WaitForSeconds(0.3f);
