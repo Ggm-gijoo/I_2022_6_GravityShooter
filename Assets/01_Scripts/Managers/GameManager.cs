@@ -29,11 +29,14 @@ public class GameManager : MonoBehaviour
     public bool IsTyping { private set; get; } = false;
 
     private GameObject scanObject;
+    private UIManager uiManager;
 
     private void Awake()
     {
         fText = FPanel.GetComponentInChildren<Text>();
         resqueText = resquePanel.GetComponentInChildren<Text>();
+
+        uiManager = GetComponent<UIManager>();
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
@@ -48,6 +51,14 @@ public class GameManager : MonoBehaviour
     {
         Check();
         ResqueCheck();
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!uiManager.pausePanel.activeSelf)
+                uiManager.OnEnablePausePanel();
+            else
+                uiManager.OnDisablePausePanel();
+        }
     }
     public void Check()
     {

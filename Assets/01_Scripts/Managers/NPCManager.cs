@@ -10,7 +10,7 @@ public class NPCManager : MonoBehaviour
     private void Awake()
     {
         talkData = GetComponent<TalkData>();
-        randomId = Random.Range(100, 104);
+        randomId = Random.Range(100, 106);
     }
 
     private void Start()

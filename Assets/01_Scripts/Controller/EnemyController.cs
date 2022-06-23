@@ -131,7 +131,7 @@ public class EnemyController : MonoBehaviour
                     enemyAnim.SetBool("Open", false);
                     enemyAnim.SetBool("Roll", false);
                     enemyAnim.SetBool("Walk", false);
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(2f);
                     Destroy(gameObject);
                     break;
             }

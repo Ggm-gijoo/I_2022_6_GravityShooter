@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: 10
-  beamPrefab: {fileID: 4710945886972268052, guid: 398c3a58377bf5843a2a9fd4ce03be2d, type: 3}
+  beamPrefab: {fileID: 4710945886972268052, guid: 14c95d56505978247ae22e37d4368ea0, type: 3}
 --- !u!114 &7618326842824270781
 MonoBehaviour:
   m_ObjectHideFlags: 0

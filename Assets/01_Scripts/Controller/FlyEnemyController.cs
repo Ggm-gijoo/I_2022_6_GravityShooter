@@ -11,6 +11,9 @@ public class FlyEnemyController : MonoBehaviour
 
     private float moveSpeed = 2f;
     private float distance = 10f;
+
+    private bool isFire = false;
+
     private Transform playerTransform;
     private Rigidbody enemyRigid;
     private EnemyManager enemyManager;
@@ -24,14 +27,31 @@ public class FlyEnemyController : MonoBehaviour
         StartCoroutine(Fire());
     }
 
+    private void Update()
+    {
+        CheckHp();
+    }
+
+    public void CheckHp()
+    {
+        if(enemyManager.Hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private IEnumerator MoveToPlayer()
     {
-        while (gameObject.GetComponent<EnemyManager>().Hp > 0 && !gameObject.GetComponent<EnemyManager>().IsStopped)
+        while (enemyManager.Hp > 0 && !enemyManager.IsStopped)
         {
             distance = Vector3.Distance(transform.position, playerTransform.position);
             yield return null;
-            if(distance <= 8)
+            if (distance <= 8)
+            {
                 enemyRigid.velocity = (transform.right * moveSpeed);
+                if (!isFire)
+                    StartCoroutine(Fire());
+            }
             else
                 enemyRigid.velocity = (transform.forward * moveSpeed);
             var targetRotation = Quaternion.LookRotation(playerTransform.position - transform.position);
@@ -42,10 +62,12 @@ public class FlyEnemyController : MonoBehaviour
 
     public IEnumerator Fire()
     {
-        while(distance <= 8 && enemyManager.Hp > 0)
+        isFire = true;
+        while (distance <= 8 && enemyManager.Hp > 0 && !enemyManager.IsStopped)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             Instantiate(beamPrefab, transform.position, transform.rotation);
         }
+        isFire = false;
     }
 }

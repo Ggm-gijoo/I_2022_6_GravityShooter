@@ -585,7 +585,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Tip . \uD574\uB2F9 \uC52C\uC740 \uB85C\uB529 \uC52C\uC785\uB2C8\uB2E4."
+  m_Text: "Tip . \uAE30\uB465\uC5D0 \uD6C5\uC0F7\uC744 \uC3D8\uBA74 \uB192\uC774
+    \uC0C1\uC2B9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
 --- !u!222 &1382304634
 CanvasRenderer:
   m_ObjectHideFlags: 0

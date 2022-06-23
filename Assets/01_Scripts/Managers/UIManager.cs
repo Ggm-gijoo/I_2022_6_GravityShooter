@@ -12,6 +12,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text hpText;
 
+    public GameObject pausePanel;
+
+    private GameManager gameManager;
+
+
+    private void Start()
+    {
+        gameManager = GetComponent<GameManager>();
+    }
+
     private void Update()
     {
         UpdateHpBar();
@@ -37,6 +47,55 @@ public class UIManager : MonoBehaviour
         else
         {
             hpBarImage.color = Color.cyan;
+        }
+    }
+
+    public void OnEnablePausePanel()
+    {
+        if (!gameManager.IsTalk)
+        {
+            Time.timeScale = 0;
+            pausePanel.SetActive(true);
+            Cursor.visible = true;
+        }
+    }
+
+    public void OnClickReplay()
+    {
+        if (!gameManager.IsTalk)
+        {
+            pausePanel.SetActive(false);
+            Cursor.visible = false;
+            Time.timeScale = 1;
+        }
+    }
+
+    public void OnClickToTitle()
+    {
+        if (!gameManager.IsTalk)
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1;
+            LoadingSceneManager.LoadScene("Title");
+        }
+    }
+
+    public void OnClickQuit()
+    {
+        if (!gameManager.IsTalk)
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1;
+            Application.Quit();
+        }
+    }
+    public void OnDisablePausePanel()
+    {
+        if (!gameManager.IsTalk)
+        {
+            Cursor.visible = false;
+            pausePanel.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 }
