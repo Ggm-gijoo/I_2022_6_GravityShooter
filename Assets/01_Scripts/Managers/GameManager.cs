@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     private GameObject scanObject;
     private UIManager uiManager;
 
-    private void Awake()
+    private void Start()
     {
         fText = FPanel.GetComponentInChildren<Text>();
         resqueText = resquePanel.GetComponentInChildren<Text>();

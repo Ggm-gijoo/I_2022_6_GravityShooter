@@ -25,9 +25,12 @@ public class EnemyBulletController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag != "Enemy")
         {
-            other.GetComponent<PlayerController>().CurrHp -= 10f;
+            if (other.tag == "Player")
+            {
+                other.GetComponent<PlayerController>().CurrHp -= 10f;
+            }
             Destroy(gameObject);
         }
     }

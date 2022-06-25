@@ -12,15 +12,20 @@ public class PlayerController : MonoBehaviour
     public float InitHp { get {return initHp; } set {initHp = value; } }
     public float CurrHp;
 
+
+
     private Rigidbody playerRigid;
     private Animator playerAnim;
     private CameraController cameraController;
+    private BgmManager bgmManager;
 
     private void Start()
     {
         playerRigid = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
+
+        bgmManager = GameObject.FindWithTag("BgmManager").GetComponent<BgmManager>();
 
         CurrHp = initHp;
 
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
         {
             Move();
             Jump();
+            CheckEnemy();
         }
     }
 
@@ -64,13 +70,29 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             playerAnim.SetTrigger("Jump");
             playerRigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
 
+    public void CheckEnemy()
+    {
+        int enemyCount = 0;
+        Collider[] colls = Physics.OverlapSphere(transform.position, 10f);
 
+        foreach(var coll in colls)
+        {
+            if(coll.CompareTag("Enemy"))
+            {
+                enemyCount++;
+            }
+        }
+        if (enemyCount > 0)
+            bgmManager.state = BgmManager.State.Warning;
+        else
+            bgmManager.state = BgmManager.State.Basic;
+    }
 
 }

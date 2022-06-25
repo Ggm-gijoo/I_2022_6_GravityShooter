@@ -36,7 +36,7 @@ public class FlyEnemyController : MonoBehaviour
     {
         if(enemyManager.Hp <= 0)
         {
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 

@@ -4,15 +4,73 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private Transform spawnerTransform;
+    public GameObject[] monster;
+
+    public float createTime = 2f;
+
+    public List<Transform> points = new List<Transform>();
+
+    public List<GameObject> monsterPool = new List<GameObject>();
+    
+    public int maxMonsters = 10;
+
+    private bool isGameOver;
+
+    public bool IsGameOver
+    {
+        get { return isGameOver; }
+        set
+        {
+            isGameOver = value;
+            if (isGameOver)
+                CancelInvoke("CreateMonster");
+        }
+    }
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemy());
+        CreateMonsterPool();
+        Transform spawnPointGroup = GameObject.Find("SpawnPointGroup")?.transform;
+        foreach (Transform item in spawnPointGroup)
+        {
+            points.Add(item);
+        }
+        InvokeRepeating("CreateMonster", 2f, createTime);
     }
 
-    private IEnumerator SpawnEnemy()
+    public void CreateMonster()
     {
-        yield return new WaitForSeconds(5f);
+        int index = Random.Range(0, points.Count);
+
+        //Instantiate(monster, points[index].position, points[index].rotation);
+
+        GameObject _monster = GetMonsterInPool();
+        _monster?.transform.SetPositionAndRotation(points[index].position, points[index].rotation);
+
+        _monster?.SetActive(true);
+    }
+    public void CreateMonsterPool()
+    {
+        for (int i = 0; i < maxMonsters; i++)
+        {
+            var _monster = Instantiate<GameObject>(monster[Random.Range(0,2)]);
+
+            _monster.name = $"Monster_{i:00}";
+
+            _monster.SetActive(false);
+
+            monsterPool.Add(_monster);
+        }
+    }
+
+    public GameObject GetMonsterInPool()
+    {
+        foreach (var _monster in monsterPool)
+        {
+            if (!_monster.activeSelf)
+                return _monster;
+        }
+
+        return null;
     }
 }
