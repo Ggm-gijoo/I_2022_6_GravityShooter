@@ -14,9 +14,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject talkPanel;
     public GameObject resquePanel;
-    public GameObject FPanel;
+    public GameObject fPanel;
 
     public GameObject Aim;
+    public GameObject mainCamera;
+    public GameObject gameOverCamera;
 
     public Text textTalk;
 
@@ -30,19 +32,24 @@ public class GameManager : MonoBehaviour
 
     private GameObject scanObject;
     private UIManager uiManager;
+    private EnemySpawner enemySpawner;
 
     private void Start()
     {
-        fText = FPanel.GetComponentInChildren<Text>();
+        fText = fPanel.GetComponentInChildren<Text>();
         resqueText = resquePanel.GetComponentInChildren<Text>();
 
         uiManager = GetComponent<UIManager>();
+        enemySpawner = GetComponent<EnemySpawner>();
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
+        mainCamera.SetActive(true);
+        gameOverCamera.SetActive(false);
+
         resquePanel.SetActive(false);
-        FPanel.SetActive(false);
+        fPanel.SetActive(false);
         talkPanel.SetActive(true);
         Talk(0);
     }
@@ -52,7 +59,13 @@ public class GameManager : MonoBehaviour
         Check();
         ResqueCheck();
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(enemySpawner.IsGameOver)
+        {
+            mainCamera.SetActive(false);
+            uiManager.OnEnableGameOverPanel();
+            gameOverCamera.SetActive(true);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape))
         {
             if (!uiManager.pausePanel.activeSelf)
                 uiManager.OnEnablePausePanel();
@@ -66,7 +79,7 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F) && !IsTyping)
             {
-                FPanel.SetActive(false);
+                fPanel.SetActive(false);
                 talkPanel.SetActive(true);
                 Talk(0);
             }
@@ -80,7 +93,7 @@ public class GameManager : MonoBehaviour
             {
                 if (hitInfo.transform.GetComponent<TalkData>() != null)
                 {
-                    FPanel.SetActive(!IsTalk);
+                    fPanel.SetActive(!IsTalk);
                     resquePanel.SetActive(!IsTalk);
                     TalkData hitTalkData = hitInfo.transform.GetComponent<TalkData>();
                     if(hitTalkData.id < 100)
@@ -104,7 +117,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                FPanel.SetActive(false);
+                fPanel.SetActive(false);
             }
         }
     }

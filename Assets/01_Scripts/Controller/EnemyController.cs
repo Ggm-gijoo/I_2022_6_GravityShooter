@@ -45,6 +45,10 @@ public class EnemyController : MonoBehaviour
         {
             state = State.Die;
         }
+        else if (playerTransform.gameObject.GetComponent<PlayerController>().CurrHp <= 0)
+        {
+            state = State.PlayerDie;
+        }
         if (state != State.Die && state != State.Idle)
         {
             Vector3 direction = agent.desiredVelocity;

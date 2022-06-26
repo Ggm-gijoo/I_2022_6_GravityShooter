@@ -12,13 +12,18 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text hpText;
 
+    public GameObject gameOverPanel;
     public GameObject pausePanel;
 
+    private Animator gameOverPanelAnim;
     private GameManager gameManager;
+
+    private bool isGameOverPanelOn = false;
 
 
     private void Start()
     {
+        gameOverPanelAnim = gameOverPanel.GetComponent<Animator>();
         gameManager = GetComponent<GameManager>();
     }
 
@@ -60,7 +65,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void OnClickReplay()
+    public void OnEnableGameOverPanel()
+    {
+        if(!isGameOverPanelOn)
+        {
+            isGameOverPanelOn = true;
+            Cursor.visible = true;
+            gameOverPanel.SetActive(true);
+            gameOverPanelAnim.Play("GameOverPanelEnable");
+        }
+    }
+
+    public void OnClickReStart()
+    {
+        Cursor.visible = false;
+        LoadingSceneManager.LoadScene("Main");
+    }
+
+    public void OnClickReturnToPlay()
     {
         if (!gameManager.IsTalk)
         {

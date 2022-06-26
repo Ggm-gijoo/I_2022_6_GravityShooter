@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
     private CameraController cameraController;
     private BgmManager bgmManager;
+    private EnemySpawner enemySpawner;
 
     private void Start()
     {
@@ -26,7 +27,8 @@ public class PlayerController : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
 
-        bgmManager = GameObject.FindWithTag("BgmManager").GetComponent<BgmManager>();
+        bgmManager = GameObject.Find("BgmManager").GetComponent<BgmManager>();
+        enemySpawner = GameObject.Find("GameManager").GetComponent<EnemySpawner>();
 
         CurrHp = initHp;
 
@@ -34,7 +36,11 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (Time.timeScale != 0)
+        if(CurrHp <= 0)
+        {
+            enemySpawner.IsGameOver = true;
+        }
+        if (Time.timeScale != 0 && !enemySpawner.IsGameOver)
         {
             Move();
             Jump();

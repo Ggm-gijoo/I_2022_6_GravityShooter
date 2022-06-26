@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     
     public int maxMonsters = 10;
 
-    private bool isGameOver;
+    private bool isGameOver = false;
 
     public bool IsGameOver
     {
@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         CreateMonsterPool();
-        Transform spawnPointGroup = GameObject.Find("SpawnPointGroup")?.transform;
+        Transform spawnPointGroup = GameObject.Find("SpawnPointGroup_Monster")?.transform;
         foreach (Transform item in spawnPointGroup)
         {
             points.Add(item);

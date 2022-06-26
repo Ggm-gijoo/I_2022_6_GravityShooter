@@ -63,7 +63,7 @@ public class FlyEnemyController : MonoBehaviour
     public IEnumerator Fire()
     {
         isFire = true;
-        while (distance <= 8 && enemyManager.Hp > 0 && !enemyManager.IsStopped)
+        while (distance <= 8 && enemyManager.Hp > 0 && !enemyManager.IsStopped &&playerTransform.GetComponentInParent<PlayerController>().CurrHp > 0)
         {
             yield return new WaitForSeconds(1f);
             Instantiate(beamPrefab, transform.position, transform.rotation);
