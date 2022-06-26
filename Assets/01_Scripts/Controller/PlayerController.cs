@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private float rotateSpeed = 80f;
     private float jumpPower = 7f;
     private float initHp = 100f;
+    private bool isCanJump = true;
     public float InitHp { get {return initHp; } set {initHp = value; } }
     public float CurrHp;
 
@@ -70,9 +71,10 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && isCanJump)
         {
             playerAnim.SetTrigger("Jump");
+            isCanJump = false;
             playerRigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
@@ -93,6 +95,14 @@ public class PlayerController : MonoBehaviour
             bgmManager.state = BgmManager.State.Warning;
         else
             bgmManager.state = BgmManager.State.Basic;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.collider.CompareTag("Ground"))
+        {
+            isCanJump = true;
+        }
     }
 
 }
