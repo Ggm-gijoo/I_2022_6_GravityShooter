@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
             {
                 resqueCount++;
                 Destroy(scanObj);
+                scanObj.GetComponent<AudioSource>().Play();
             }
         }
         catch
@@ -192,6 +193,7 @@ public class GameManager : MonoBehaviour
         resqueText.text = $"구조인원 {resqueCount} / 10";
         if (resqueCount >= 10)
         {
+            Cursor.visible = true;
             SceneManager.LoadScene("Clear");
         }
     }
