@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ButtonManager : MonoBehaviour
 {
-    private void OnMouseEnter()
+    private AudioSource mouseOnAudio;
+
+    private void Start()
     {
-        
+        mouseOnAudio = GetComponent<AudioSource>();
+    }
+
+    public void OnMouseEnter()
+    {
+        mouseOnAudio.Play();
     }
 }

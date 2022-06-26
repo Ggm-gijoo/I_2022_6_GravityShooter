@@ -17,12 +17,14 @@ public class FlyEnemyController : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody enemyRigid;
     private EnemyManager enemyManager;
+    private AudioSource audioSource;
 
     private void Start()
     {
-        playerTransform = GameObject.FindWithTag("PTF").GetComponent<Transform>();
+        playerTransform = GameObject.Find("PlayerTransform(Fly)").GetComponent<Transform>();
         enemyRigid = GetComponent<Rigidbody>();
         enemyManager = GetComponent<EnemyManager>();
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(MoveToPlayer());
         StartCoroutine(Fire());
     }
@@ -66,6 +68,7 @@ public class FlyEnemyController : MonoBehaviour
         while (distance <= 8 && enemyManager.Hp > 0 && !enemyManager.IsStopped &&playerTransform.GetComponentInParent<PlayerController>().CurrHp > 0)
         {
             yield return new WaitForSeconds(1f);
+            audioSource.Play();
             Instantiate(beamPrefab, transform.position, transform.rotation);
         }
         isFire = false;
