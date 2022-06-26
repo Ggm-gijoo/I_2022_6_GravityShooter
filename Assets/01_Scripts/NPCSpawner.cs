@@ -44,7 +44,7 @@ public class NPCSpawner : MonoBehaviour
         {
             var _npc = Instantiate<GameObject>(NPC);
 
-            _npc.name = $"Monster_{i:00}";
+            _npc.name = $"NPC_{i:00}";
 
             _npc.SetActive(false);
 

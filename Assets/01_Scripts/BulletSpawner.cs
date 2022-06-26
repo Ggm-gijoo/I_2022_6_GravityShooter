@@ -23,6 +23,7 @@ public class BulletSpawner : MonoBehaviour
 
     private Text reloadText;
     private LineRenderer hookLine;
+    private AudioSource[] audioSources;
     private int ammunition = 3;
     private int reloadAmm = 3;
 
@@ -34,6 +35,7 @@ public class BulletSpawner : MonoBehaviour
     {
         reloadTextObj.SetActive(false);
         reloadText = reloadTextObj.GetComponent<Text>();
+        audioSources = GetComponents<AudioSource>();
     }
 
     private void Update()
@@ -51,6 +53,7 @@ public class BulletSpawner : MonoBehaviour
         {
             if (!IsHookOn && ammunition > 0 && !IsReload)
             {
+                audioSources[0].Play();
                 GameObject bullet = Instantiate(bulletPrefab, firePos.position, cameraPos.rotation);
                 bullet.transform.forward = cameraPos.forward;
                 bullet.SendMessage("OnMove");
@@ -98,7 +101,8 @@ public class BulletSpawner : MonoBehaviour
         IsReload = true;
         for(int i = 0; i < 3 - reloadAmm; i++)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.7f);
+            audioSources[1].Play();
             reloadText.text += " .";
             ammunition += 1;
             bulletIcons[ammunition-1].GetComponent<Image>().color = Color.cyan;

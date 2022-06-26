@@ -38,6 +38,7 @@ public class EnemyManager : MonoBehaviour
         while (Hp > 0 && IsInhaled)
         {
             yield return new WaitForSeconds(0.7f);
+            gameObject.GetComponent<AudioSource>().Play();
             Hp -= 10f;
         }
     }
