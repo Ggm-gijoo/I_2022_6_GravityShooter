@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject mainCamera;
     public GameObject gameOverCamera;
 
-    public Text textTalk;
+    public TextMeshProUGUI textTalk;
 
     private Text fText;
     private Text resqueText;
@@ -180,7 +181,15 @@ public class GameManager : MonoBehaviour
                 yield break;
             }
             textWriter += talkData[i];
-
+            if (talkData[i] == '<')
+            {
+                do
+                {
+                    i++;
+                    textWriter += talkData[i];
+                }
+                while (talkData[i] != '>');
+            }
             textTalk.text = textWriter;
             i++;
             yield return new WaitForSecondsRealtime(0.02f);
